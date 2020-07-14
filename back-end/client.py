@@ -12,9 +12,9 @@ def register():
 	print(requests.post(url, data=payload).text)
 
 # Login + connect to socketio server
-def connect(username, password):
+def connect(url,username, password):
 	header = {'username': username, 'password':password}    
-	sio.connect('http://localhost:5000', headers=header)
+	sio.connect(url, headers=header)
 
 def create_room(roomid):
 	sio.emit('create room', {'data': roomid})
@@ -32,4 +32,6 @@ def makemove(x, y):
 def response(message):
     print(message)
 
-	
+if __name__ == "__main__":
+	sio.connect("http://localhost:5000")
+	print(sio.call('join', {'data':'hi'}))

@@ -9,7 +9,7 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
     password_hash = db.Column(db.String(128))
-    score = db.Column(db.Integer)
+    score = db.Column(db.Integer, default=0)
 
     def is_authenticated(self):
         return True
@@ -22,6 +22,9 @@ class User(UserMixin, db.Model):
 
     def check_password(self, password):
     	return check_password_hash(self.password_hash, password)
+
+    def update_score(self):
+        self.score += 100
 
 
 @login.user_loader
